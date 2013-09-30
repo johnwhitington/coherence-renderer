@@ -1344,17 +1344,16 @@ let p1, p2, p3, p4 =
 
 let opendemos () =
   (* Demonstration of Minimal Rendering *)
-  (*opendemo
+  opendemo
     p1
-    [(*i move TopLeft (50., 10.) (scale 1.3 (flipy (mintext1 ()))); 
+    [move TopLeft (50., 10.) (scale 1.3 (flipy (mintext1 ()))); 
      move TopLeft (50., 220.) (scale 1.3 (flipy (mintext2 ())));
-     move Centre (100., 120.) (scale 0.4 (brushcircle ())); i*)
+     move Centre (100., 120.) (scale 0.4 (brushcircle ()));
      move Centre (100., 130.) (scale 0.8 blurfilter);
      move Centre (100., 120.) (scale 0.4 (flipy (smalllion ())));
-     (*i move Centre (500., 120.) (scale 0.7 (flipx (brush ()))); i*)
+     move Centre (500., 120.) (scale 0.7 (flipx (brush ())));
      ]
-    "Minimal Rendering";*)
-
+    "Minimal Rendering";
   (* Demonstration of Filters *)
   opendemo
     p2
@@ -1378,14 +1377,11 @@ let opendemos () =
      move Centre (450., 200.) monofilter;
      move Centre (100., 180.) (scale 0.5 (flipy (smalllion ())));
      move Centre (200., 200.) (fade 128 (blur 3 (scale 2. (flipy (logo ())))));
-     (*move Centre (300., 200.) (flipy (q_shape_2 ()));*)
+     move Centre (300., 200.) (flipy (q_shape_2 ()));
      move Centre (400., 200.) (brushblue ());
      move Centre (500., 200.) (rotate 25. (scale 0.5 cpg_example))
     ]))
     "Filters";
-    
-  minimal_window_number := (hd !views).window
-    (*i
   (* Brushstroke filter, CPG filters, smearing. *)
   opendemo
     p3
@@ -1436,7 +1432,8 @@ let opendemos () =
       movexy (100., 50.) (line Colour.green 2. (10., 60.) (60., 100.))
         ])
     ]
-    "Antialiasing improvements" i*)
+    "Antialiasing improvements";
+  minimal_window_number := (hd !views).window
 
 let notdebug win =
   win <> debug_view.window
