@@ -1223,7 +1223,7 @@ let opendemo (sx, sy, dx, dy, canvas_w, canvas_h) renderobjects name =
      window = Wxgui.nullwindow;
      background = [background];
      selections = null_selection;
-     master_update = master_update;
+     master_update = Sprite.box 0 0 (canvas_w + 150) (canvas_h + 150);
      rubberband = None;
      tool = Wxgui.Select}
   in
@@ -1332,10 +1332,10 @@ let random_circle () =
 let p1, p2, p3, p4 =
   match Wxgui.get_platform () with
   | Wxgui.Mac ->
-      (300, 300, 0, 30, 150, 150),
-      (650, 500, 650, 30, 550, 350),
-      (650, 400, 650, 610, 550, 250),
-      (600, 250, 0, 760, 500, 100)
+      (600, 300, 0, 30, 500, 150),
+      (650, 600, 650, 30, 550, 350),
+      (650, 500, 650, 610, 550, 250),
+      (600, 350, 0, 710, 500, 100)
   | _ ->
       (600, 400, 0, 30, 500, 150),
       (650, 600, 650, 30, 550, 350),
