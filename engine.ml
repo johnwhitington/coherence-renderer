@@ -684,7 +684,7 @@ let selection_to_bottom view =
 (* A left button down event with the select tool.
 \smallgap
 
-\begin{tabular}{l|l}
+\begin{tabular}{l | l}
   \textbf{Picked} & \textbf {Action} \\ \hline
   Object not in selection & Add to or change the selection. \\
   Object in current selection & Start translation dragging \\
@@ -733,7 +733,7 @@ let zoom_leftdown x y view  =
 (* A left button dragging event with the select tool.
 \smallgap
 
-\begin{tabular}{l|l}
+\begin{tabular}{l | l}
   \textbf{Picked} & \textbf {Action} \\ \hline
   Object not in selection & -- \\
   Object in current selection & If dragging, do translation \\
@@ -895,7 +895,7 @@ let zoom_dragging x y view =
 (* A left button up event with the select tool.
 \smallgap
 
-\begin{tabular}{l|l}
+\begin{tabular}{l | l}
   \textbf{Picked} & \textbf {Action} \\ \hline
   Object not in selection & -- \\
   Object in current selection & If dragging, stop \\
