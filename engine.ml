@@ -5,7 +5,7 @@ open Sprite
 open Examples
 
 (* There is at most one debug window. *)
-let debug = true
+let debug = false
 let frag_debug = true
 
 (* Do we open the cache status window? *)
@@ -235,15 +235,15 @@ let force_update selections lmo view shape =
       Wxgui.plot_sprite view.window 0 0 rendered;
       Wxgui.refresh_window view.window (x0, y0, x1, y1);
       (* Debug window code *)
-      if debug && view.window = !minimal_window_number then
+      if (debug || frag_debug) && view.window = !minimal_window_number then
         begin let tx0, ty0, tx1, ty1 =
           match (!old_debug_coords ||| (shape_of_sprite rendered)) &&& view.master_update with
           | Shape (Box (x0, y0, x1, y1), _) -> x0, y0, x1, y1
           | _ -> failwith "nullshape / debug force update"
         in
-          Wxgui.plot_shape debug_view.window 0 0 Colour.white !old_debug_coords;
+          (*Wxgui.plot_shape debug_view.window 0 0 Colour.white !old_debug_coords;
           Wxgui.plot_shape debug_view.window 0 0 Colour.lightgray (Sprite.shape_of_sprite rendered);
-          Wxgui.refresh_window debug_view.window (tx0, ty0, tx1, ty1);
+          Wxgui.refresh_window debug_view.window (tx0, ty0, tx1, ty1);*)
           Wxgui.plot_shape frag_debug_view.window 0 0 Colour.white !old_debug_coords;
           Wxgui.plot_sprite frag_debug_view.window 0 0 rendered;
           Wxgui.refresh_window frag_debug_view.window (tx0, ty0, tx1, ty1);
@@ -1358,6 +1358,8 @@ let p1, p2, p3, p4 =
       (650, 500, 650, 610, 550, 250),
       (600, 350, 0, 710, 500, 100)
 
+     (*move Centre (100., 120.) (scale 0.4 (flipy (smalllion ())));*)
+
 let opendemos () =
   (* Demonstration of Minimal Rendering *)
   opendemo
@@ -1366,8 +1368,20 @@ let opendemos () =
      move TopLeft (50., 220.) (scale 1.3 (flipy (mintext2 ())));
      move Centre (100., 120.) (scale 0.4 (brushcircle ()));
      move Centre (100., 130.) (scale 0.8 blurfilter);
-     move Centre (100., 120.) (scale 0.4 (flipy (smalllion ())));
      move Centre (500., 120.) (scale 0.7 (flipx (brush ())));
+      (mkgroup
+        [move Centre (200., 100.) (scale 0.5 (rotate 0. (p6_curve ())));
+      move Centre (200., 100.) (scale 0.5 (rotate 10. (p6_curve ()))); 
+      move Centre (200., 100.) (scale 0.5 (rotate 20. (p6_curve ()))); 
+      move Centre (200., 100.) (scale 0.5 (rotate 30. (p6_curve ()))); 
+      move Centre (200., 100.) (scale 0.5 (rotate 40. (p6_curve ()))); 
+      move Centre (200., 100.) (scale 0.5 (rotate 50. (p6_curve ()))); 
+      move Centre (200., 100.) (scale 0.5 (rotate 60. (p6_curve ()))); 
+      move Centre (200., 100.) (scale 0.5 (rotate 70. (p6_curve ())))]);
+     move Centre (200., 200.) (fade 128 (blur 3 (scale 2. (flipy (logo ())))));
+     move Centre (300., 200.) (flipy (q_shape_2 ()));
+     move Centre (400., 200.) (brushblue ());
+     move Centre (500., 200.) (rotate 25. (scale 0.5 cpg_example))
      ]
     "Minimal Rendering";
   (* Demonstration of Filters *)
