@@ -88,10 +88,10 @@ let page x y w h =
                    rectangle (x +. 6.) (y +. 6.) w h), Pdftransform.i, Over))]
 
 let debug_background =
-  primobj Colour.white (Rectangle (0., 0., 1280., 1024.))
+  primobj Colour.white (Rectangle (0., 0., 2280., 2024.))
 
 let frag_debug_background =
-  primobj Colour.white (Rectangle (0., 0., 1280., 1024.))
+  primobj Colour.lightgrey (Rectangle (0., 0., 2280., 2024.))
 
 let getshape = shapeonly_of_basicshape
 
@@ -244,7 +244,7 @@ let force_update selections lmo view shape =
           (*Wxgui.plot_shape debug_view.window 0 0 Colour.white !old_debug_coords;
           Wxgui.plot_shape debug_view.window 0 0 Colour.lightgray (Sprite.shape_of_sprite rendered);
           Wxgui.refresh_window debug_view.window (tx0, ty0, tx1, ty1);*)
-          Wxgui.plot_shape frag_debug_view.window 0 0 Colour.white !old_debug_coords;
+          Wxgui.plot_shape frag_debug_view.window 0 0 Colour.lightgrey !old_debug_coords;
           Wxgui.plot_sprite frag_debug_view.window 0 0 rendered;
           Wxgui.refresh_window frag_debug_view.window (tx0, ty0, tx1, ty1);
           old_debug_coords := Sprite.shape_of_sprite rendered
@@ -1259,7 +1259,7 @@ let _ =
   if frag_debug then
     begin
       frag_debug_view.window <-
-        Wxgui.make_window "Sprite Debug window" 600 300 600 400 560 240 false;
+        Wxgui.make_window "Sprite Debug window" 600 740 650 30 560 240 false;
       Wxgui.set_status_bar (frag_debug_view.window, "This window shows the redraw region of the window above.")
     end
 
@@ -1346,19 +1346,12 @@ let random_circle () =
       (Basic (Fill.plain rc, (Path (Shapes.circle rx ry rr))))
 
 let p1, p2, p3, p4 =
-  match Wxgui.get_platform () with
-  | Wxgui.Mac ->
-      (600, 300, 0, 30, 500, 150),
-      (650, 600, 650, 30, 550, 350),
-      (650, 500, 650, 610, 550, 250),
-      (600, 350, 0, 710, 500, 100)
-  | _ ->
-      (600, 400, 0, 30, 500, 150),
-      (650, 600, 650, 30, 550, 350),
-      (650, 500, 650, 610, 550, 250),
-      (600, 350, 0, 710, 500, 100)
+  (600, 700, 0, 30, 500, 580),
+  (650, 600, 650, 30, 550, 350),
+  (650, 500, 650, 610, 550, 250),
+  (600, 350, 0, 710, 500, 100)
 
-     (*move Centre (100., 120.) (scale 0.4 (flipy (smalllion ())));*)
+(*move Centre (100., 120.) (scale 0.4 (flipy (smalllion ())));*)
 
 let opendemos () =
   (* Demonstration of Minimal Rendering *)
