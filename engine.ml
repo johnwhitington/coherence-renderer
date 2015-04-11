@@ -134,14 +134,11 @@ let remove_view win =
   views := lose (fun v -> v.window = win) !views
 
 let rec pickview window = function
-  | [] ->
-      Printf.printf "Window is %s\n" (string_of_int window);
-      failwith "pickview: window didn't exist!"
+  | [] -> failwith "pickview: window didn't exist!"
   | {window = w} as h::_ when w = window -> h
   | _::t -> pickview window t
 
 let pickview window =
-  Printf.printf "calling pickview for window %i, there are %i views\n" window (length !views);
   pickview window !views
 
 (* Icons. *)
@@ -209,8 +206,8 @@ let minimal_window_number = ref 0
 
 (* When we're asked to render something by the interface. *)
 let render_rect win x y w h =
-  Printf.printf "passive render: win %i, x %i, y %i, w %i, h %i, debug = %i\n" win x y w h !minimal_window_number;
-  flprint "\n";
+  (*Printf.printf "passive render: win %i, x %i, y %i, w %i, h %i, debug = %i\n" win x y w h !minimal_window_number;
+  flprint "\n";*)
   (* Intersect the box with 0..1279, 0..1023 *)
   match box_overlap 0 0 1279 1023 x y (x + w - 1) (y + h - 1) with
   | None -> ()
@@ -716,7 +713,6 @@ let select_leftdown x y view =
   stateflags.justpicked <- false;
   match pick x y view with
   | PickedObject renderobject ->
-      flprint (string_of_int 1);
       if not (is_selected view.selections renderobject) then
         begin
           stateflags.justpicked <- true;
@@ -931,7 +927,6 @@ let select_leftup x y view =
           let selected = is_selected view.selections renderobject in
             match selected, stateflags.previous_event, stateflags.justpicked with
             | true, Some (Wxgui.LeftDown _), false ->
-                flprint (string_of_int 2);
                 let selections' =
                   match view.selections with
                   | Size, x ->
@@ -941,11 +936,9 @@ let select_leftup x y view =
                 in
                   change_selection view (rehandle_selections selections')
             | true, Some (Wxgui.LeftDown _), true ->
-                flprint (string_of_int 3);
                 redraw_selections view
             | _, Some (Wxgui.LeftDragging _), _ ->
                (* Reset rotation centre if required. *)
-               flprint (string_of_int 4);
                begin
                  match view.selections with
                  | Rotate _, ss ->
@@ -1058,7 +1051,6 @@ let zoom_leftup _ _ view =
             in
               zoom_transform view tr
   | DragRubberband, _ ->
-      flprint "Zooming by two\n";
       let cx = float (Wxgui.get_window_width view.window / 2)
       and cy = float (Wxgui.get_window_height view.window / 2) in
         zoom_about view cx cy 2.

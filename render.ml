@@ -1480,7 +1480,6 @@ let rgb_of_cmyk c m y k =
 
 let rec fill_of_pdf_colour pdf resources vals transparency = function
   | Pdfspace.DeviceRGB  ->
-      flprint "fill_of_pdf_colour A\n";
       let transparency = toint (transparency *. 255.) in
         begin match vals with
         | Pdfgraphics.Floats [r; g; b] ->
@@ -1489,7 +1488,6 @@ let rec fill_of_pdf_colour pdf resources vals transparency = function
         | _ -> flprint "COL devicergb/floats mismatch\n"; Fill.plain Colour.red
         end
   | Pdfspace.DeviceCMYK ->
-      flprint "fill_of_pdf_colour B\n";
       let transparency = toint (transparency *. 255.) in
        begin match vals with
        | Pdfgraphics.Floats [c; m; y; k] ->
@@ -1499,7 +1497,6 @@ let rec fill_of_pdf_colour pdf resources vals transparency = function
        | _ ->  flprint "COL devicecmyk/floats mismatch\n"; Fill.plain Colour.red
        end
   | Pdfspace.DeviceGray ->
-      flprint "fill_of_pdf_colour C\n";
       let transparency = toint (transparency *. 255.) in
        begin match vals with
        | Pdfgraphics.Floats [g] ->
@@ -1509,7 +1506,6 @@ let rec fill_of_pdf_colour pdf resources vals transparency = function
        | _ ->  flprint "COL devicegray/floats mismatch\n"; Fill.plain Colour.red
        end
   | Pdfspace.ICCBased {Pdfspace.icc_alternate = cs} ->
-      flprint "fill_of_pdf_colour D\n";
       fill_of_pdf_colour pdf resources vals transparency cs
   | c -> Printf.printf "COL ERROR: Not handling colourspace \n%s\n" (Pdfspace.string_of_colourspace c); Fill.plain Colour.red
 

@@ -172,9 +172,9 @@ let examplei () = load_text "i.pdf"
 
 let smalllion () =
   let graphic, pdf, resources = pdf_graphic_from_file (!path ^ "/" ^ "lion.pdf") in
-    flprint "\n";
+    (*flprint "\n";
     flprint (Pdfgraphics.string_of_graphic graphic);
-    flprint "\n";
+    flprint "\n";*)
     let objs = Render.scene_of_graphic pdf graphic in
       Obj (Id.new_ids (), Group (rev objs), Pdftransform.i, Over)
 
