@@ -141,6 +141,7 @@ let rec pickview window = function
   | _::t -> pickview window t
 
 let pickview window =
+  Printf.printf "calling pickview for window %i, there are %i views\n" window (length !views);
   pickview window !views
 
 (* Icons. *)
@@ -246,6 +247,9 @@ let force_update selections lmo view shape =
           Wxgui.plot_shape debug_view.window 0 0 Colour.white !old_debug_coords;
           Wxgui.plot_shape debug_view.window 0 0 Colour.lightgray (Sprite.shape_of_sprite rendered);
           Wxgui.refresh_window debug_view.window (tx0, ty0, tx1, ty1);
+          Wxgui.plot_shape frag_debug_view.window 0 0 Colour.white !old_debug_coords;
+          Wxgui.plot_sprite frag_debug_view.window 0 0 rendered;
+          Wxgui.refresh_window frag_debug_view.window (tx0, ty0, tx1, ty1);
           old_debug_coords := Sprite.shape_of_sprite rendered
         end
   | _ -> ()
@@ -1262,7 +1266,7 @@ let _ =
     end;
   if frag_debug then
     begin
-      debug_view.window <-
+      frag_debug_view.window <-
         Wxgui.make_window "Sprite Debug window" 600 300 600 400 560 240 false;
       Wxgui.set_status_bar (frag_debug_view.window, "This window shows the redraw region of the window above.")
     end
