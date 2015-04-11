@@ -11,13 +11,16 @@ SOURCES = camlpy.ml camlpy.mli pytalk.ml pytalk.mli id.ml id.mli\
 
 RESULT = engine
 
-OCAMLNCFLAGS = -g
-OCAMLBCFLAGS = -g
+OCAMLNCFLAGS = -g -w -3
+OCAMLBCFLAGS = -g -w -3
 OCAMLLDFLAGS = -g
 
 PACKS = camlgpc camlpdf
 
 all : native-code htdoc
+
+clean ::
+	rm -rf doc foo foo2 *.pyc
 
 -include OCamlMakefile
 

@@ -6,6 +6,7 @@ open Examples
 
 (* There is at most one debug window. *)
 let debug = true
+let frag_debug = true
 
 (* Do we open the cache status window? *)
 let cache_debug = false
@@ -89,6 +90,9 @@ let page x y w h =
 let debug_background =
   primobj Colour.white (Rectangle (0., 0., 1280., 1024.))
 
+let frag_debug_background =
+  primobj Colour.white (Rectangle (0., 0., 1280., 1024.))
+
 let getshape = shapeonly_of_basicshape
 
 (* \section{Window setup} *)
@@ -110,8 +114,21 @@ let debug_view =
    rubberband = None;
    tool = Wxgui.Select}
 
+let frag_debug_view =
+  {scene = [];
+   pages = [];
+   window = Wxgui.nullwindow;
+   background = [frag_debug_background];
+   selections = null_selection;
+   master_update = master_update;
+   rubberband = None;
+   tool = Wxgui.Select}
+
 let views =
-  if debug then ref [debug_view] else ref []
+  let views = 
+    if debug then [debug_view] else []
+  in
+    if frag_debug then ref (frag_debug_view :: views) else ref views
 
 let remove_view win =
   views := lose (fun v -> v.window = win) !views
@@ -1238,14 +1255,17 @@ exception AppExit
 (* Code to be executed after initialisation of the WxWidgets part. *)
 let _ =
   if debug then
-    debug_view.window <-
-      begin match Wxgui.get_platform () with
-      | Wxgui.Mac ->
-          Wxgui.make_window "Debug window" 600 300 0 400 560 240 false
-      | _ ->
-          Wxgui.make_window "Debug window" 600 300 0 400 560 240 false
-      end;
+    begin
+      debug_view.window <-
+        Wxgui.make_window "Redraw Debug window" 600 300 0 400 560 240 false;
       Wxgui.set_status_bar (debug_view.window, "This window shows the redraw region of the window above.")
+    end;
+  if frag_debug then
+    begin
+      debug_view.window <-
+        Wxgui.make_window "Sprite Debug window" 600 300 600 400 560 240 false;
+      Wxgui.set_status_bar (frag_debug_view.window, "This window shows the redraw region of the window above.")
+    end
 
 let x = ref 0
 and y = ref 0
@@ -1355,7 +1375,7 @@ let opendemos () =
      ]
     "Minimal Rendering";
   (* Demonstration of Filters *)
-  opendemo
+  (*opendemo
     p2
     (
      [move TopLeft (50., 10.) (scale 1.3 (flipy (filtertext1 ()))); 
@@ -1432,11 +1452,11 @@ let opendemos () =
       movexy (100., 50.) (line Colour.green 2. (10., 60.) (60., 100.))
         ])
     ]
-    "Antialiasing improvements";
+    "Antialiasing improvements";*)
   minimal_window_number := (hd !views).window
 
 let notdebug win =
-  win <> debug_view.window
+  win <> debug_view.window && win <> frag_debug_view.window
 
 let event_handler event =
   begin match event with
