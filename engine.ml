@@ -1357,24 +1357,41 @@ let opendemos () =
   (* Demonstration of Minimal Rendering *)
   opendemo
     p1
-    [move TopLeft (50., 10.) (scale 1.3 (flipy (mintext1 ()))); 
-     move TopLeft (50., 220.) (scale 1.3 (flipy (mintext2 ())));
+    [
+
+     (border_of_obj 1. (Colour.dissolve Colour.black ~delta:128)
+     (move Centre (150., 200.) wireframe));
+     move Centre (150., 200.) wireframe;
+     (border_of_obj 1. (Colour.dissolve Colour.black ~delta:128)
+     (move Centre (350., 200.) blurfilter));
+     move Centre (350., 200.) blurfilter;
+     (border_of_obj 1. (Colour.dissolve Colour.black ~delta:128)
+     (move Centre (450., 200.) monofilter));
+     move Centre (450., 200.) monofilter;
+
+      move TopLeft (50., 10.) (scale 1.3 (flipy (mintext1 ()))); 
+
      move Centre (100., 120.) (scale 0.4 (brushcircle ()));
-     move Centre (100., 130.) (scale 0.8 blurfilter);
-     move Centre (500., 120.) (scale 0.7 (flipx (brush ())));
-      (mkgroup
-        [move Centre (200., 100.) (scale 0.5 (rotate 0. (p6_curve ())));
-      move Centre (200., 100.) (scale 0.5 (rotate 10. (p6_curve ()))); 
-      move Centre (200., 100.) (scale 0.5 (rotate 20. (p6_curve ()))); 
-      move Centre (200., 100.) (scale 0.5 (rotate 30. (p6_curve ()))); 
-      move Centre (200., 100.) (scale 0.5 (rotate 40. (p6_curve ()))); 
-      move Centre (200., 100.) (scale 0.5 (rotate 50. (p6_curve ()))); 
-      move Centre (200., 100.) (scale 0.5 (rotate 60. (p6_curve ()))); 
-      move Centre (200., 100.) (scale 0.5 (rotate 70. (p6_curve ())))]);
      move Centre (200., 200.) (fade 128 (blur 3 (scale 2. (flipy (logo ())))));
      move Centre (300., 200.) (flipy (q_shape_2 ()));
      move Centre (400., 200.) (brushblue ());
-     move Centre (500., 200.) (rotate 25. (scale 0.5 cpg_example))
+     move Centre (500., 200.) (rotate 25. (scale 0.5 cpg_example));
+      move TopLeft (80., 55.)
+       (mkgroup
+        [movex 50. (line Colour.green 1. (10., 60.) (10., 100.));
+      movex 60. (line Colour.green 1. (10., 60.) (20., 100.));
+      movex 70. (line Colour.green 1. (10., 60.) (30., 100.));
+      movex 80. (line Colour.green 1. (10., 60.) (40., 100.));
+      movex 90. (line Colour.green 1. (10., 60.) (50., 100.));
+      movex 100. (line Colour.green 1. (10., 60.) (60., 100.));
+      movexy (50., 50.) (line Colour.green 2. (10., 60.) (10., 100.));
+      movexy (60., 50.) (line Colour.green 2. (10., 60.) (20., 100.));
+      movexy (70., 50.) (line Colour.green 2. (10., 60.) (30., 100.));
+      movexy (80., 50.) (line Colour.green 2. (10., 60.) (40., 100.));
+      movexy (90., 50.) (line Colour.green 2. (10., 60.) (50., 100.));
+      movexy (100., 50.) (line Colour.green 2. (10., 60.) (60., 100.))
+        ])
+
      ]
     "Minimal Rendering";
   (* Demonstration of Filters *)
@@ -1439,21 +1456,6 @@ let opendemos () =
       move Centre (200., 100.) (scale 0.5 (rotate 50. (p6_curve ()))); 
       move Centre (200., 100.) (scale 0.5 (rotate 60. (p6_curve ()))); 
       move Centre (200., 100.) (scale 0.5 (rotate 70. (p6_curve ())))]);
-      move TopLeft (80., 55.)
-       (mkgroup
-        [movex 50. (line Colour.green 1. (10., 60.) (10., 100.));
-      movex 60. (line Colour.green 1. (10., 60.) (20., 100.));
-      movex 70. (line Colour.green 1. (10., 60.) (30., 100.));
-      movex 80. (line Colour.green 1. (10., 60.) (40., 100.));
-      movex 90. (line Colour.green 1. (10., 60.) (50., 100.));
-      movex 100. (line Colour.green 1. (10., 60.) (60., 100.));
-      movexy (50., 50.) (line Colour.green 2. (10., 60.) (10., 100.));
-      movexy (60., 50.) (line Colour.green 2. (10., 60.) (20., 100.));
-      movexy (70., 50.) (line Colour.green 2. (10., 60.) (30., 100.));
-      movexy (80., 50.) (line Colour.green 2. (10., 60.) (40., 100.));
-      movexy (90., 50.) (line Colour.green 2. (10., 60.) (50., 100.));
-      movexy (100., 50.) (line Colour.green 2. (10., 60.) (60., 100.))
-        ])
     ]
     "Antialiasing improvements";*)
   minimal_window_number := (hd !views).window
