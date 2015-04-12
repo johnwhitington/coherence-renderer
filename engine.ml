@@ -1358,25 +1358,30 @@ let opendemos () =
   opendemo
     p1
     [
-
+     (* Filters *)
      (border_of_obj 1. (Colour.dissolve Colour.black ~delta:128)
-     (move Centre (150., 200.) wireframe));
-     move Centre (150., 200.) wireframe;
+     (move Centre (150., 550.) wireframe));
+     move Centre (150., 550.) wireframe;
      (border_of_obj 1. (Colour.dissolve Colour.black ~delta:128)
-     (move Centre (350., 200.) blurfilter));
-     move Centre (350., 200.) blurfilter;
+     (move Centre (300., 550.) blurfilter));
+     move Centre (300., 550.) blurfilter;
      (border_of_obj 1. (Colour.dissolve Colour.black ~delta:128)
-     (move Centre (450., 200.) monofilter));
-     move Centre (450., 200.) monofilter;
-
-      move TopLeft (50., 10.) (scale 1.3 (flipy (mintext1 ()))); 
-
-     move Centre (100., 120.) (scale 0.4 (brushcircle ()));
-     move Centre (200., 200.) (fade 128 (blur 3 (scale 2. (flipy (logo ())))));
-     move Centre (300., 200.) (flipy (q_shape_2 ()));
-     move Centre (400., 200.) (brushblue ());
-     move Centre (500., 200.) (rotate 25. (scale 0.5 cpg_example));
-      move TopLeft (80., 55.)
+     (move Centre (450., 550.) monofilter));
+     move Centre (450., 550.) monofilter;
+     (* text *)
+     move TopLeft (50., 10.) (scale 1.3 (flipy (mintext1 ()))); 
+     (* brush in a circle *)
+     move Centre (300., 150.) (scale 0.6 (brushcircle ()));
+     (* coherent graphics logo *)
+     move Centre (450., 350.) (fade 128 (blur 3 (scale 2. (flipy (logo ())))));
+     (* the blue q *)
+     move Centre (450., 150.) (flipy (q_shape_2 ()));
+     (* the blue brush *)
+     move Centre (150., 150.) (brushblue ());
+     (* the two circles intersected with one another *)
+     move Centre (150., 350.) (rotate 25. (scale 0.5 cpg_example));
+     (* the green lines *)
+      move Centre (300., 350.)
        (mkgroup
         [movex 50. (line Colour.green 1. (10., 60.) (10., 100.));
       movex 60. (line Colour.green 1. (10., 60.) (20., 100.));
