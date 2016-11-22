@@ -2001,7 +2001,10 @@ let debug_pdf = ref (Pdf.empty ())
 let debug_sprites = ref []
 
 let add_debug_sprite ?(dx = 0) ?(dy = 0) s =
-  (* Temporarily, composit this against a fully white background to make sure no partial transparencies get though until we've fixed the debug code to do soft masks for PDFs properly - presently they're fine on screen but fail on printing *)
+  (* Temporarily, composit this against a fully white background to make sure no
+   * partial transparencies get though until we've fixed the debug code to do
+   * soft masks for PDFs properly - presently they're fine on screen but fail
+   * on printing *)
   flprint "************** add_debug_sprite\n";
   debug_sprites =|
      let s = sprite_map (fun c -> Colour.over c Colour.white) s in

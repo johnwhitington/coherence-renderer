@@ -119,7 +119,8 @@ let brushblue () =
 
 let minusfilter = 
   object_of_geometry
-     (Filters.minus (Basic (Fill.plain Colour.white, rectangle 200. 200. 100.  100.)))
+     (Filters.minus (Basic (Fill.plain Colour.white, (Path (Shapes.circle 100. 150. 40.)))))
+
 
 let monofilter =
   object_of_geometry
