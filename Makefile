@@ -11,8 +11,8 @@ SOURCES = camlpy.ml camlpy.mli pytalk.ml pytalk.mli id.ml id.mli\
 
 RESULT = engine
 
-OCAMLNCFLAGS = -g -w -3
-OCAMLBCFLAGS = -g -w -3
+OCAMLNCFLAGS = -unsafe-string -g -w -3
+OCAMLBCFLAGS = -unsafe-string -g -w -3
 OCAMLLDFLAGS = -g
 
 PACKS = camlgpc camlpdf
