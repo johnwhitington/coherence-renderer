@@ -137,14 +137,14 @@ let q_shape () =
 let q_shape_2 () =
   mkpoly
     (pdf_pathsinfile "q.pdf")
-    (Fill.plain (Colour.dissolve Colour.cornflowerblue 200))
+    (Fill.plain (Colour.dissolve Colour.cornflowerblue ~delta:200))
     Pdftransform.i
     Over
 
 let logo () =
   mkpoly
     (pdf_pathsinfile "logo.pdf")
-    (Fill.plain (Colour.dissolve Colour.darkred 255))
+    (Fill.plain (Colour.dissolve Colour.darkred ~delta:255))
     Pdftransform.i
     Over
 
@@ -221,7 +221,7 @@ let p6_curve () =
   (let pth = pdf_pathsinfile "brushcurve.pdf" in
     position_anchor Centre (300., 300.)
       (Obj (Id.new_ids (),
-       (Basic ((Fill.plain (Colour.dissolve Colour.slateblue 255)),
+       (Basic ((Fill.plain (Colour.dissolve Colour.slateblue ~delta:255)),
          (StrokedPath (pth,
   {Shapes.startcap = Shapes.RoundCap;
    Shapes.join = Shapes.RoundJoin;
@@ -235,7 +235,7 @@ let p6_curve () =
 let p6_curve2 () =
   position_anchor Centre (310., 310.)
     (Obj(Id.new_ids (),
-     (Basic((Fill.plain (Colour.dissolve Colour.slateblue 128)),
+     (Basic((Fill.plain (Colour.dissolve Colour.slateblue ~delta:128)),
        (StrokedPath(pdf_pathsinfile "brushcurve.pdf",
     {Shapes.startcap = Shapes.RoundCap;
      Shapes.join = Shapes.RoundJoin;
@@ -249,7 +249,7 @@ let p6_curve2 () =
 let p6_curve3 () =
   position_anchor Centre (320., 320.)
     (Obj(Id.new_ids (),
-     (Basic((Fill.plain (Colour.dissolve Colour.slateblue 192)),
+     (Basic((Fill.plain (Colour.dissolve Colour.slateblue ~delta:192)),
        (StrokedPath(pdf_pathsinfile "brushcurve.pdf",
     {Shapes.startcap = Shapes.RoundCap;
      Shapes.join = Shapes.RoundJoin;

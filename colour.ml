@@ -356,8 +356,8 @@ let dissolve_between ~a b ~alpha =
   assert (alpha >= 0 && alpha <= 255);
   if alpha = 0 then b
   else if alpha = 255 then a else
-    let a' = dissolve a alpha
-    and b' = dissolve b (255 - alpha) in
+    let a' = dissolve a ~delta:alpha
+    and b' = dissolve b ~delta:(255 - alpha) in
       pd_plus a' b'
 
 (* \intf Predicate to determine if a colour is opaque *)

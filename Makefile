@@ -1,4 +1,4 @@
-SOURCES = camlpy.ml camlpy.mli pytalk.ml pytalk.mli id.ml id.mli\
+SOURCES = pdfgraphics.ml pdfgraphics.mli camlpy.ml camlpy.mli pytalk.ml pytalk.mli id.ml id.mli\
 	  colour.ml colour.mli coord.ml coord.mli\
 	  canvas.ml canvas.mli fill.ml fill.mli\
 	  sprite.ml sprite.mli\
@@ -11,8 +11,9 @@ SOURCES = camlpy.ml camlpy.mli pytalk.ml pytalk.mli id.ml id.mli\
 
 RESULT = engine
 
-OCAMLNCFLAGS = -unsafe-string -g -w -3
-OCAMLBCFLAGS = -unsafe-string -g -w -3
+LIBS = unix
+OCAMLNCFLAGS = -g -w -3
+OCAMLBCFLAGS = -g -w -3
 OCAMLLDFLAGS = -g
 
 PACKS = camlgpc camlpdf

@@ -78,7 +78,7 @@ let marshall m =
     let str = String.create size in
       bytes_of_int str 0 (size - 4);
       ignore (marshall_flatten str 4 m);
-      str
+      Bytes.to_string str
 
 (* Unmarshall *)
 exception Invalid_data

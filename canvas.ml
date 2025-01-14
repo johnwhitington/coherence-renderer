@@ -72,7 +72,7 @@ let string_of_canvas c =
             spos := !spos + 3
         done
       done;
-      s
+      Bytes.to_string s
 
 let string_of_canvas_alpha c =
   let w = canvas_width c
@@ -86,7 +86,7 @@ let string_of_canvas_alpha c =
           incr spos
         done
       done;
-      s
+      Bytes.to_string s
 
 let bytes_of_canvas c =
   let w = canvas_width c

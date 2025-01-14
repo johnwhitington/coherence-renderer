@@ -977,7 +977,7 @@ let rec sprite_of_cpg shp fill f_transform op a b =
                         Sprite.map_coords
                           (fun y x alpha ->
                              let c' = fill'.Fill.fillsingle x y in
-                               Colour.dissolve c' (Colour.alpha_of_colour alpha))
+                               Colour.dissolve c' ~delta:(Colour.alpha_of_colour alpha))
                           alpha
 
 (* Calculate the sprite of a basic shape or filter. *)
@@ -1135,7 +1135,7 @@ and spriteof lmo lower obj shp objects_below whole_scene =
   match obj with
   Obj ((oid, _) as idset, geom, f_transform, compop) as obj ->
     (* The objects in a scene below idset in its group or, if no group, at top level. *)
-    let rec groupfilter idset scene =
+    (*let rec groupfilter idset scene =
       match scene with
       | [] -> []
       | h::t ->
@@ -1164,7 +1164,7 @@ and spriteof lmo lower obj shp objects_below whole_scene =
                     Obj (idset', Group (fullfilter idset objs), tr, compop)::t
                 | _ -> fullfilter idset t
               end
-    in
+    in*)
       let lower' = lower in
         let cachedwholesprite, pshape =
           match geom, idset with
@@ -1252,14 +1252,14 @@ and blend' sprsc sprsc' alpha =
         fst
           (Sprite.caf
             (fun col alphacol ->
-               Colour.dissolve col (255 - Colour.alpha_of_colour alphacol))
+               Colour.dissolve col ~delta:(255 - Colour.alpha_of_colour alphacol))
             Colour.opaque sprsc alpha_in_sprsc)
       in
         let sprsc'_att =
           fst
             (Sprite.caf
               (fun col alphacol ->
-                 Colour.dissolve col (Colour.alpha_of_colour alphacol))
+                 Colour.dissolve col ~delta:(Colour.alpha_of_colour alphacol))
               Colour.opaque sprsc' alpha_in_sprsc')
         in
           fst (Sprite.caf Colour.pd_plus Colour.opaque sprsc_att sprsc'_att)

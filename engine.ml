@@ -80,11 +80,11 @@ let page x y w h =
        Colour.white
        (Rectangle (x, y, x +. w, y +. h));
      primobj
-       (Colour.dissolve_between Colour.black Colour.white 200)
+       (Colour.dissolve_between ~a:Colour.black Colour.white ~alpha:200)
        (Rectangle (x -. 1., y -. 1., r +. 1., b +. 1.));
      blur_renderobject 4
        (Obj (Id.new_ids (),
-            Basic (Fill.plain (Colour.dissolve_between Colour.black Colour.white 120),
+            Basic (Fill.plain (Colour.dissolve_between ~a:Colour.black Colour.white ~alpha:120),
                    rectangle (x +. 6.) (y +. 6.) w h), Pdftransform.i, Over))]
 
 let debug_background =
@@ -1202,7 +1202,7 @@ let openfile name =
     let page_w, page_h =
       match Pdfpage.pages_of_pagetree pdf with
       | page::_ ->
-          let x, y, x2, y2 = Pdf.parse_rectangle page.Pdfpage.mediabox in
+          let x, y, x2, y2 = Pdf.parse_rectangle pdf page.Pdfpage.mediabox in
             fabs (x2 -. x), fabs (y2 -. y)
       | [] -> failwith "PDF file has no pages"
     in

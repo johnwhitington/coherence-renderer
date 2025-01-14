@@ -361,7 +361,7 @@ let refresh_window window (xmin, ymin, xmax, ymax) =
           synch_call_args "RefreshWindow"
             [Int window;
              Int xmin; Int ymin; Int (xmax - xmin + 1); Int (ymax - ymin + 1);
-             String data]
+             String (Bytes.to_string data)]
         with
         | [] -> ()
         | _ -> assert false

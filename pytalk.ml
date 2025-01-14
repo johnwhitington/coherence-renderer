@@ -20,8 +20,8 @@ let rec poll sock send close =
   if Queue.is_empty events then
     let events_this_time = ref [] in
       while !events_this_time = [] do
-        let recv_result = Unix.recv sock rawbuf 0 (String.length rawbuf) [] in
-          buffer := !buffer ^ String.sub rawbuf 0 recv_result;
+        let recv_result = Unix.recv sock rawbuf 0 (Bytes.length rawbuf) [] in
+          buffer := !buffer ^ (Bytes.to_string (Bytes.sub rawbuf 0 recv_result));
           let finished = ref false in
           while not !finished do
             match unmarshall !buffer with
@@ -41,7 +41,7 @@ let rec poll sock send close =
 let rec send_inner sock str startpos =
   if startpos < String.length str then
     let sent =
-      Unix.send sock str startpos (String.length str - startpos) []
+      Unix.send sock (Bytes.of_string str) startpos (Bytes.length (Bytes.of_string str) - startpos) []
     in
       send_inner sock str (startpos + sent)
  

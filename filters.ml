@@ -173,13 +173,13 @@ let rgb geometry (rtf, gtf, btf) filltype =
           (rev (rev_map (fun obj ->
             [rgb_transform_object
               (fun c -> Colour.dissolve
-                 (Colour.red_channel c) 64) (rtf (Pdftransform.transform f centre)) obj;
+                 (Colour.red_channel c) ~delta:64) (rtf (Pdftransform.transform f centre)) obj;
              rgb_transform_object
                (fun c -> Colour.dissolve
-                 (Colour.green_channel c) 64) (gtf (Pdftransform.transform f centre)) obj;
+                 (Colour.green_channel c) ~delta:64) (gtf (Pdftransform.transform f centre)) obj;
              rgb_transform_object
                 (fun c -> Colour.dissolve
-                 (Colour.blue_channel c) 64) (btf (Pdftransform.transform f centre)) obj])
+                 (Colour.blue_channel c) ~delta:64) (btf (Pdftransform.transform f centre)) obj])
           scene)));
    filter = nullfilterfunction;
    (* Transform the dirty shape for all three channel transformations, and then union *)

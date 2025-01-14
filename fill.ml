@@ -86,7 +86,7 @@ let rec gradient ?(f=ident) (x0, y0) (x1, y1) ext_s ext_e cs ce =
           else if x' > 1. then
             if ext_e then ce else Colour.clear
           else
-            Colour.dissolve_between cs ce (255 - toint (x' *. 255.))
+            Colour.dissolve_between ~a:cs ce ~alpha:(255 - toint (x' *. 255.))
   in
     {fillkind = Fancy;
      fillsingle =
@@ -122,7 +122,7 @@ let rec radial ?(f=ident) c p p' ext_s ext_e cs ce =
           else
             if diff_rr' = 0.  then cs else (*r d = r = r' *)
               let t = (d -. r) /. diff_rr' in
-                Colour.dissolve_between cs ce (255 - toint (t *. 255.))
+                Colour.dissolve_between ~a:cs ce ~alpha:(255 - toint (t *. 255.))
   in
     {fillkind = Fancy;
      fillsingle =

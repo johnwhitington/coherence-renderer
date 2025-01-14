@@ -87,7 +87,7 @@ let drawround radius opacity colour =
                 let v = (g (float x') (float y') radius) in
                   let v' = toint (v *. 1.) in
                     assert (v' >= 0 && v' <= 255);
-                    Colour.dissolve (Colour.dissolve colour intopacity) v'
+                    Colour.dissolve (Colour.dissolve colour ~delta:intopacity) ~delta:v'
           done
         done; brush
 
@@ -216,7 +216,7 @@ let sprite_of_brushstroke ((((opacity, brushkind) as brush), path) as brushstrok
                                 canvas.(y - y0).(x - x0) <-
                                   Colour.dissolve
                                     (fill.Fill.fillsingle x y)
-                                    (Colour.alpha_of_colour canvas.(y - y0).(x - x0)))
+                                    ~delta:(Colour.alpha_of_colour canvas.(y - y0).(x - x0)))
                              shp);
                          (* Pick the canvas up and return. *)
                          Sprite.pickup shp (~-x0 + 2) (~-y0 + 2) canvas
@@ -302,7 +302,7 @@ let smear spr ((brush, path) as brushstroke) =
                   in
                    (* 4. Create canvas and accumulation canvas *)
                    let canvas = Sprite.flatten_sprite 1 spr Colour.clear
-                   and opacbrush = drawbrush brush (Colour.dissolve Colour.white 255)
+                   and opacbrush = drawbrush brush (Colour.dissolve Colour.white ~delta:255)
                    and brush = Canvas.newcanvas brushx brushy in
                      (* 5. Smear each one. *)
 					   for x = 1 to 2 do
@@ -317,8 +317,8 @@ let smear spr ((brush, path) as brushstroke) =
                                  (* 3. Stamp brush *)
                                  stamp
                                    (fun a b brushx brushy ->
-                                      Colour.dissolve_between b a
-                                        (Colour.alpha_of_colour
+                                      Colour.dissolve_between ~a:b a
+                                        ~alpha:(Colour.alpha_of_colour
                                            opacbrush.(brushy - 1).(brushx - 1)))
                                blurred canvas (x + 1, y + 1)
 							 with
