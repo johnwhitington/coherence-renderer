@@ -61,14 +61,14 @@ let subcopy src dest x y w h =
 let string_of_canvas c =
   let w = canvas_width c
   and h = canvas_height c in
-    let s = String.create (w * h * 3)
+    let s = Bytes.create (w * h * 3)
     and spos = ref 0 in
       for yd = 0 to h - 1 do
         for xd = 0 to w - 1 do
           let r, g, b = Colour.unpremul_rgb c.(yd).(xd) in
-            s.[!spos] <- char_of_int r;
-            s.[!spos + 1] <- char_of_int g;
-            s.[!spos + 2] <- char_of_int b;
+            Bytes.set s !spos (char_of_int r);
+            Bytes.set s (!spos + 1) (char_of_int g);
+            Bytes.set s (!spos + 2) (char_of_int b);
             spos := !spos + 3
         done
       done;
@@ -77,12 +77,12 @@ let string_of_canvas c =
 let string_of_canvas_alpha c =
   let w = canvas_width c
   and h = canvas_height c in
-    let s = String.create (w * h)
+    let s = Bytes.create (w * h)
     and spos = ref 0 in
       for yd = 0 to h - 1 do
         for xd = 0 to w - 1 do
-          s.[!spos] <-
-            char_of_int (Colour.alpha_of_colour c.(yd).(xd));
+          Bytes.set s !spos
+            (char_of_int (Colour.alpha_of_colour c.(yd).(xd)));
           incr spos
         done
       done;

@@ -335,14 +335,14 @@ let string_of_canvas_portion canvas xmin xmax ymin ymax =
   assert (xmax > xmin && ymax > ymin);
   assert (xmin >= 0 && ymin >= 0 && xmax < 1280 && ymax < 1024);
   let size = (xmax - xmin + 1) * (ymax - ymin + 1) * 3 in
-    let s = String.create size in
+    let s = Bytes.create size in
       let spos = ref 0
       and apos = ref (3 * 1280 * ymin + (xmin * 3)) in
         for row = ymin to ymax do
           for column = xmin to xmax do
-            s.[!spos] <- char_of_int (bget canvas (!apos + (column - xmin) * 3));
-            s.[!spos + 1] <- char_of_int (bget canvas (!apos + (column - xmin) * 3 + 1));
-            s.[!spos + 2] <- char_of_int (bget canvas (!apos + (column - xmin) * 3 + 2));
+            Bytes.set s !spos (char_of_int (bget canvas (!apos + (column - xmin) * 3)));
+            Bytes.set s (!spos + 1) (char_of_int (bget canvas (!apos + (column - xmin) * 3 + 1)));
+            Bytes.set s (!spos + 2) (char_of_int (bget canvas (!apos + (column - xmin) * 3 + 2)));
             spos += 3;
           done;
           apos += (1280 * 3)

@@ -30,31 +30,31 @@ and tag_bool = 4
 
 (* Make 4 bytes from an integer *)
 let bytes_of_int s p i =
-  s.[p] <- char_of_int ((i land (255 lsl 24)) lsr 24);
-  s.[p + 1] <- char_of_int ((i land (255 lsl 16)) lsr 16);
-  s.[p + 2] <- char_of_int ((i land (255 lsl 8)) lsr 8);
-  s.[p + 3] <- char_of_int (i land 255)
+  Bytes.set s p (char_of_int ((i land (255 lsl 24)) lsr 24));
+  Bytes.set s (p + 1) (char_of_int ((i land (255 lsl 16)) lsr 16));
+  Bytes.set s (p + 2) (char_of_int ((i land (255 lsl 8)) lsr 8));
+  Bytes.set s (p + 3) (char_of_int (i land 255))
 
 let rec marshall_flatten s pos = function
   | Unit ->
-      s.[pos] <- char_of_int tag_unit;
+      Bytes.set s pos (char_of_int tag_unit);
       pos + 1
   | Int i ->
-      s.[pos] <- char_of_int tag_int;
+      Bytes.set s pos (char_of_int tag_int);
       bytes_of_int s (pos + 1) i;
       pos + 5
   | Bool b ->
-      s.[pos] <- char_of_int tag_bool;
-      s.[pos + 1] <- char_of_int (if b then 1 else 0);
+      Bytes.set s pos (char_of_int tag_bool);
+      Bytes.set s (pos + 1) (char_of_int (if b then 1 else 0));
       pos + 2
   | String st ->
       let l = String.length st in
-        s.[pos] <- char_of_int tag_string;
+        Bytes.set s pos (char_of_int tag_string);
         bytes_of_int s (pos + 1) l;
         String.blit st 0 s (pos + 5) l;
         pos + 5 + l
   | Tuple ls ->
-      s.[pos] <- char_of_int tag_tuple;
+      Bytes.set s pos (char_of_int tag_tuple);
       let p = ref (pos + 5) in
         iter (fun x -> p := marshall_flatten s !p x) ls;
         bytes_of_int s (pos + 1) (!p - (pos + 5));
@@ -75,7 +75,7 @@ let size_of_marshallable m =
 (* Main marshalling function *)
 let marshall m =
   let size = size_of_marshallable m in
-    let str = String.create size in
+    let str = Bytes.create size in
       bytes_of_int str 0 (size - 4);
       ignore (marshall_flatten str 4 m);
       Bytes.to_string str

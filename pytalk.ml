@@ -7,7 +7,7 @@ open Camlpy
 let buffer = ref ""
 
 (* The raw buffer for network input *)
-let rawbuf = String.create 1024
+let rawbuf = Bytes.create 1024
 
 (* The event queue *)
 let events = Queue.create ()

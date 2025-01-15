@@ -11,6 +11,7 @@ SOURCES = pdfgraphics.ml pdfgraphics.mli camlpy.ml camlpy.mli pytalk.ml pytalk.m
 
 RESULT = engine
 
+INCDIRS = +unix
 LIBS = unix
 OCAMLNCFLAGS = -g -w -3
 OCAMLBCFLAGS = -g -w -3
