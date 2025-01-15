@@ -43,23 +43,23 @@ def marshall_inner(m):
     return [TAG_BOOL, 1]
   elif (m == False) and (type(m) is types.BooleanType):
     return [TAG_BOOL, 0]
-  elif type(m) is types.IntType:
+  elif type(m) is int:
     tag = [TAG_INT]
     tag.extend(bytes_of_int(m))
     return tag
-  elif type(m) is types.StringType:
+  elif type(m) is str:
     tag = [TAG_STRING]
     tag.extend (bytes_of_int(len(m)))
     tag.extend (ints_of_string (m))
     return tag
-  elif type(m) is types.ListType:
+  elif type(m) is list:
     tail = flatten(map(marshall_inner, m))
     tag = [TAG_TUPLE]
     tag.extend(bytes_of_int(len(tail)))
     tag.extend(tail)
     return tag
   else:
-    print m,type(m)
+    print (m,type(m))
     raise Exception('Invalid Data')
 
 def marshall(m):

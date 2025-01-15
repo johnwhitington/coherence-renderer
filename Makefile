@@ -22,7 +22,7 @@ PACKS = camlgpc camlpdf
 all : native-code htdoc
 
 clean ::
-	rm -rf doc foo foo2 *.pyc
+	rm -rf __pycache__ doc foo foo2 *.pyc
 
 -include OCamlMakefile
 

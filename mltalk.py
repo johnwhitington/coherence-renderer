@@ -10,10 +10,10 @@ buffer = ""
 
 #Returns send, poll, close
 def establish_connection (port):
-  print "PY: Connecting to Caml on port ", str(port)
+  print("PY: Connecting to Caml on port ", str(port))
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   sock.connect(('localhost', port))
-  print "PY: Connected."
+  print("PY: Connected.")
   #sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 0)
   def send(message):
     marshalled = pycaml.marshall(message)
@@ -22,7 +22,7 @@ def establish_connection (port):
         done = sock.send(marshalled)
         marshalled = marshalled[done:]
       except:
-        print "PY: Connection broken trying to send"
+        print("PY: Connection broken trying to send")
         sock.close()
         sys.exit(2)
   def poll():
@@ -45,7 +45,7 @@ def establish_connection (port):
     event = pycaml.unmarshall(alldata)
     return(event)
   def close():
-    print "PY: close() called, closing socket"
+    print("PY: close() called, closing socket")
     sock.close()
   return (send, poll, close)
 
@@ -61,9 +61,9 @@ def pystarts_establish_connection_inner (port):
   sock.listen(1)
   runengine(port)
   #Accept the connection from Ocaml
-  print "PY: runengine called, now trying to accept connection"
+  print("PY: runengine called, now trying to accept connection")
   sock.accept()
-  print "PY: sock.accept() returned"
+  print("PY: sock.accept() returned")
   #Build send, poll, close
   def send(message):
     marshalled = pycaml.marshall(message)
@@ -72,7 +72,7 @@ def pystarts_establish_connection_inner (port):
         done = sock.send(marshalled)
         marshalled = marshalled[done:]
       except:
-        print "PY: Connection broken trying to send"
+        print("PY: Connection broken trying to send")
         sock.close()
         sys.exit(2)
   def poll():
@@ -95,7 +95,7 @@ def pystarts_establish_connection_inner (port):
     event = pycaml.unmarshall(alldata)
     return(event)
   def close():
-    print "PY: close() called, closing socket"
+    print("PY: close() called, closing socket")
     sock.close()
   return (send, poll, close)
 
@@ -117,7 +117,7 @@ def runengine():
   os.spawnv(os.P_NOWAIT, 'engine', ('engine', 'findport'))
 
 def pystarts_establish_connection ():
-  print "PY: pystarts_establish_connection "
+  print("PY: pystarts_establish_connection ")
   #Delete any file 'findport'
   try:
     os.remove('findport')
@@ -130,10 +130,10 @@ def pystarts_establish_connection ():
   while found == 0:
     try:
       f = open('findport', 'rb')
-      print "PYSTARTS:got a file findport!"
+      print("PYSTARTS:got a file findport!")
       found = 1
       port = f.readline ()
-      print (int(port))
+      print(int(port))
       return (establish_connection (int(port)))
     except IOError:
       pass

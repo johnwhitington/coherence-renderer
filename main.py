@@ -6,7 +6,7 @@ import mltalk
 
 #Otherwise, we're responding to the ocaml side: make the GUI.
 import wx
-import thread
+import threading
 
 #Make the application
 app = wx.PySimpleApp()
@@ -292,10 +292,10 @@ class MainWindow(wx.Frame):
 #If no port number is given, we're initiating the start up procedure
 #from the python side, so call the ocaml executable and exit.
 if len(sys.argv) == 1:
-  print "calling engine.exe findport - we're starting from python"
+  print("calling engine.exe findport - we're starting from python")
   send, poll, close = mltalk.pystarts_establish_connection()
 else:
-  print "calling normal establish_connection"
+  print("calling normal establish_connection")
   send, poll, close = mltalk.establish_connection(int(sys.argv[1]))
 
 def setstatusbar(win, text):
@@ -361,12 +361,12 @@ def dispatch(obj):
     frame.Close(True)
     #self.Destroy()
   elif obj[0] == "Startup":
-    print "PY: Application startup data received"
+    print("PY: Application startup data received")
     sys.stdout.flush()
     seticons(obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7], obj[8])
   else:
-    print "PY: Unknown message from caml..."
-    print obj[0]
+    print("PY: Unknown message from caml...")
+    print(obj[0])
     sys.stdout.flush()
 
 def poll_repeatedly():
@@ -374,9 +374,9 @@ def poll_repeatedly():
     while 1:
       dispatch(poll())
   except:
-    print "PY: Killed comms thread"
+    print("PY: Killed comms thread")
 
-sockthread = thread.start_new_thread(poll_repeatedly, ())
+sockthread = threading.Thread(target=poll_repeatedly).start()
 
 def setcachetext(text):
   global cachewindow
@@ -391,14 +391,14 @@ def opencachewindow():
 
 # Main code, polling for the initial AppStart request
 try:
-  print "PY: Sending AppStart...."
+  print("PY: Sending AppStart....")
   send(["AppStart"])
   app.MainLoop()
-  print "PY: MainLoop ended"
+  print("PY: MainLoop ended")
 finally:
-  print "PY: ERROR IN MAIN LOOP, SHUTTING DOWN"
+  print("PY: ERROR IN MAIN LOOP, SHUTTING DOWN")
   close()
 
-print "PY: Startup finisihed, main thread has reached end of file."
+print("PY: Startup finisihed, main thread has reached end of file.")
 
 
