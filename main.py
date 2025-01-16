@@ -9,7 +9,7 @@ import wx
 import threading
 
 #Make the application
-app = wx.PySimpleApp()
+app = wx.App(False)
 
 frame = wx.Frame(None, wx.ID_ANY, "moo")
 
@@ -114,10 +114,10 @@ ID_ABOUT = 101
 ID_EXIT = 110
 ID_OPEN = 102
 
-select_icon = wx.EmptyBitmap(1, 1)
-zoom_icon = wx.EmptyBitmap(1, 1)
-totop_icon = wx.EmptyBitmap(1, 1)
-tobottom_icon = wx.EmptyBitmap(1, 1)
+select_icon = wx.Bitmap(1, 1)
+zoom_icon = wx.Bitmap(1, 1)
+totop_icon = wx.Bitmap(1, 1)
+tobottom_icon = wx.Bitmap(1, 1)
 
 #Make an image from the raw data, and paste to a bitmap.
 def bitmap_of_icon(icon, alpha, w, h):
